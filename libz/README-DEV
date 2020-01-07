@@ -1,0 +1,29 @@
+This document describes how libz was packaged for build2. In particular, this
+understanding will be useful when upgrading to a new upstream version. See
+../README-DEV for general notes on zlib packaging.
+
+Symlink the required upstream files into libz/:
+
+$ cd libz &&
+  ln -s ../../upstream/*.{c,h,map} ../../upstream/win32/*.def ./ &&
+  rm zconf.h zlib.h
+
+The upstream's (hand written) configure script pre-processes zconf.h.in and
+replaces '#ifdef HAVE_UNISTD_H' and '#ifdef HAVE_STDARG_H' with '#if 1' on
+POSIX. We replace these constructs in zconf.h.in with '#if @HAVE_...@' and use
+the in module to generate zconf.h. We also edit zlib.h to include zconf.h
+using angle brackets rather that quotes for the headers auto-generating
+machinery to work properly.
+
+$ cp ../../upstream/{zconf.h.in,zlib.h} ./
+$ touch zconf.h
+$ patch -p0 <zconf.h.in.patch
+$ patch -p0 <zlib.h.patch
+
+Note that there is no LICENSE/COPYING file in the upstream project as the
+copyright notice is provided at the end of its README file. We extract it into
+a separate (installable) LICENSE file.
+
+Use the upstream's minigzip test for testing:
+
+ln -s ../../../upstream/test/minigzip.c ../tests/minigzip/

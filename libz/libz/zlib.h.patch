@@ -1,0 +1,11 @@
+--- ../../upstream/zlib.h	2020-01-06 18:33:14.848145554 +0300
++++ zlib.h	2020-01-20 21:24:04.526545608 +0300
+@@ -31,7 +31,7 @@
+ #ifndef ZLIB_H
+ #define ZLIB_H
+ 
+-#include "zconf.h"
++#include <zconf.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {

@@ -1,0 +1,79 @@
+This document describes an approach applied to packaging zlib for build2. In
+particular, this understanding will be useful when upgrading to a new upstream
+version.
+
+The upstream package contains the libz library, its usage examples, and tests.
+Currently, we only package libz (see libz/README-DEV for details).
+
+We add the upstream package as a git submodule and symlink the required files
+and subdirectories into the build2 package subdirectories. Then, when required,
+we "overlay" the upstream with our own headers, placing them into the library
+directory.
+
+Note that symlinking upstream submodule subdirectories into a build2 package
+subdirectory results in creating intermediate build files (.d, .o, etc) inside
+upstream directory while building the package in source tree. That's why we
+need to make sure that packages do not share upstream source files via
+subdirectory symlinks, not to also share the related intermediate files. If
+several packages need to compile the same upstream source file, then only one
+of them can symlink it via the parent directory while others must symlink it
+directly. We also add the `ignore = untracked` configuration option into
+.gitmodules to make sure that git ignores the intermediate build files under
+upstream/ subdirectory.
+
+The upstream package can be configured to contain a specific feature set. We
+reproduce the union of features configured for the upstream source package in
+Debian and Fedora distributions. The configuration options defining these sets
+are specified in the Debian's rules and Fedora's RPM .spec files. These files
+can be obtained as follows:
+
+$ wget http://deb.debian.org/debian/pool/main/z/zlib/zlib_1.2.11.dfsg-1.debian.tar.xz
+$ tar xf zlib_1.2.11.dfsg-1.debian.tar.xz debian/rules
+
+$ wget https://kojipkgs.fedoraproject.org//packages/zlib/1.2.11/20.fc32/src/zlib-1.2.11-20.fc32.src.rpm
+$ rpm2cpio zlib-1.2.11-20.fc32.src.rpm | cpio -civ '*.spec'
+
+As a side note, on Debian and Fedora the source, libraries, and headers are
+packaged as follows:
+
+                src   library  headers
+Debian/Ubuntu:  zlib  zlib1g   zlib1g-dev
+Fedora/RHEL:    zlib  zlib     zlib-devel
+
+Search for the Debian and Fedora packages at https://packages.debian.org/search
+and https://apps.fedoraproject.org/packages/.
+
+Both distributions use the default feature set and specify no additional
+configuration options for the configure script.
+
+Normally, when packaging a project, we need to replace some auto-generated
+headers with our own implementations and deduce compilation/linking options.
+For zlib we can rely for that on configure, Makefile.in, and
+win32/Makefile.{gcc,msc}. In practice, however, that can be uneasy and error
+prone, so you may also need to see the auto-generated files and the actual
+compiler and linker command lines in the build log. If that's the case, you
+can configure/build the upstream package on the platform of interest running
+the following commands in the upstream project root directory.
+
+On POSIX:
+
+$ mkdir build
+$ cd build
+$ ../configure >build.log 2>&1
+$ make >>build.log 2>&1
+
+For MinGW GCC:
+
+$ make -fwin32/Makefile.gcc >build.log 2>&1
+
+For MSVC:
+
+> nmake -f win32/Makefile.msc >build.log 2>&1
+
+When the packaging is complete, build all the project packages in source tree
+and make sure that no zlib headers are included from the system, running the
+following commands from the project root:
+
+$ cat `find . -name '*.d'` | sort -u >headers
+$ emacs headers  # Edit, leaving system headers only.
+$ fgrep zlib <headers
