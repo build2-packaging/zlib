@@ -1,6 +1,6 @@
 : 1
 name: libz
-version: 1.2.1100
+version: 1.2.1100+1
 upstream-version: 1.2.11
 project: zlib
 summary: General-purpose lossless data compression C library

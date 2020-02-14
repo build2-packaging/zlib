@@ -1,13 +1,16 @@
 # file      : libz/buildfile
-# copyright : Copyright (c) 2018-2019 Code Synthesis Ltd
 # license   : zlib License; see accompanying LICENSE file
 
-lib{z}: {h c}{*} {def}{zlib} {file}{zlib.map}
+lib{z}: {h c}{*} def{zlib}
 
 tclass = $c.target.class
 tsys   = $c.target.system
 
+linux   = ($tclass == 'linux')
+bsd     = ($tclass == 'bsd')
 windows = ($tclass == 'windows')
+
+lib{z}: file{zlib.map}: include = ($linux || $bsd ? adhoc : false)
 
 # Include the generated config header into the distribution (so that we don't
 # pick up an installed one) and don't remove it when cleaning in src (so that
