@@ -30,10 +30,10 @@ using install
 # Makefile.in). So presumably major is incremented on backwards-incompatible
 # ABI changes.
 #
-if ($version.major == 1 && $version.minor == 2 && $version.patch == 1100)
+if ($version.major == 1 && $version.minor == 2 && $version.patch == 1200)
 {
   abi_version_major = 1
-  abi_version = "$abi_version_major.2.11" # ...11.1 for subrevision 1, etc.
+  abi_version = "$abi_version_major.2.12" # ...12.1 for subrevision 1, etc.
 }
 else
   fail "increment the ABI version?"
