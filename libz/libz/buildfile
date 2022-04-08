@@ -1,7 +1,7 @@
 # file      : libz/buildfile
 # license   : zlib License; see accompanying LICENSE file
 
-lib{z}: {h c}{*} def{zlib}
+lib{z}: {h c}{* -zconf} h{zconf}
 
 tclass = $c.target.class
 tsys   = $c.target.system
@@ -10,7 +10,8 @@ linux   = ($tclass == 'linux')
 bsd     = ($tclass == 'bsd')
 windows = ($tclass == 'windows')
 
-lib{z}: file{zlib.map}: include = ($linux || $bsd ? adhoc : false)
+libs{z}: file{zlib.map}: include = ($linux || $bsd ? adhoc : false)
+libs{z}: def{zlib}:      include = $windows
 
 # Include the generated config header into the distribution (so that we don't
 # pick up an installed one) and don't remove it when cleaning in src (so that
@@ -47,7 +48,7 @@ switch $tclass, $tsys
 #
 c.poptions =+ "-I$out_base" "-I$src_base"
 
-switch $c.class, $tsys
+switch $c.class
 {
   case 'gcc'
   {
@@ -96,7 +97,6 @@ else
 
 # Install the bare minimum of headers (note: not recreating subdirectories).
 #
-h{*}: install = false
-
-for h: zconf zlib
-  h{$h}@./: install = include/
+h{*}:       install = false
+h{zconf}:   install = include/
+h{zlib}@./: install = include/

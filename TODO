@@ -1,17 +1,5 @@
 On the revision:
 
-- Make the .map and .def files prerequisites of the libs type target and only
-  on the respective OSes.
-
-- Fix the switch statements in the buildfiles, replacing 'switch $c.class,
-  $tsys' with 'switch $c.class'.
-
-- Canonicalize the license in the package manifest.
-
-- Disable the success build emails.
-
-- Make libz/LICENSE a symlink to the file in the project root directory.
-
 On the release:
 
 - Use legal{} target type for legal documentation (LICENSE, AUTHORS, etc).
