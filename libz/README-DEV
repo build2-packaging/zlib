@@ -20,6 +20,17 @@ $ touch zconf.h
 $ patch -p0 <zconf.h.in.patch
 $ patch -p0 <zlib.h.patch
 
+Apply patches to fix CVE-2022-37434:
+
+$ rm inflate.c
+$ cp ../../upstream/inflate.c .
+$ patch -p0 <CVE-2022-37434-eff308a.patch
+$ patch -p0 <CVE-2022-37434-1eb7682.patch
+
+@@ TMP Remove the CVE-2022-37434-* patches, the above notes, and turn libz.c
+   back into symlink to ../../upstream/inflate.c when upgrade to upstream
+   version > 1.2.12.
+
 Note that there is no LICENSE/COPYING file in the upstream project as the
 copyright notice is provided at the end of its README file. We extract it into
 a separate (installable) LICENSE file.
