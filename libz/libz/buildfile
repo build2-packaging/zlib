@@ -63,7 +63,8 @@ switch $c.class
 
     if ($c.id == 'clang')
     {
-      c.coptions += -Wno-deprecated-non-prototype
+      if ($c.version.major >= 15)
+        c.coptions += -Wno-deprecated-non-prototype
 
       # Disable the Clang targeting MSVC warnings.
       #
