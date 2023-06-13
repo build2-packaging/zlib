@@ -1,0 +1,8 @@
+: 1
+name: libz
+version: 1.2.1200+3
+upstream-version: 1.2.12
+project: zlib
+priority: security
+summary: General-purpose lossless data compression C library
+license: Zlib; Permissive free software license.
