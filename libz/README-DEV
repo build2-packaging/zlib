@@ -1,3 +1,7 @@
+TODO:
+
+  - Try to re-enable warnings in case fixed.
+
 This document describes how libz was packaged for build2. In particular, this
 understanding will be useful when upgrading to a new upstream version. See
 ../README-DEV for general notes on zlib packaging.
