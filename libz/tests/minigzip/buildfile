@@ -7,13 +7,15 @@ exe{driver}: {h c}{*} $libs testscript
 
 # Disable MSVC warnings that pop up with /W3 and Clang warnings.
 #
+# @@ TMP: try to re-enable on next release.
+#
 if ($c.class == 'msvc')
   c.coptions += /wd4267 /wd4996
-elif ($c.id == 'clang')
+else
 {
-  if ($c.version.major >= 15)
+  if ($c.id.type == 'clang' && $c.version.major >= 15)
     c.coptions += -Wno-deprecated-non-prototype
 
-  if ($c.target.system == 'win32-msvc')
+  if ($c.id == 'clang' && $c.target.system == 'win32-msvc')
     c.coptions += -Wno-deprecated-declarations
 }

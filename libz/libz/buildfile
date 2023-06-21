@@ -61,16 +61,13 @@ switch $c.class
     #
     c.coptions += -Wno-all -Wno-extra
 
-    if ($c.id == 'clang')
-    {
-      if ($c.version.major >= 15)
-        c.coptions += -Wno-deprecated-non-prototype
+    if ($c.id.type == 'clang' && $c.version.major >= 15)
+      c.coptions += -Wno-deprecated-non-prototype
 
-      # Disable the Clang targeting MSVC warnings.
-      #
-      if ($tsys == 'win32-msvc')
-        c.coptions += -Wno-deprecated-declarations
-    }
+    # Disable the Clang targeting MSVC warnings.
+    #
+    if ($c.id == 'clang' && $tsys == 'win32-msvc')
+      c.coptions += -Wno-deprecated-declarations
   }
   case 'msvc'
   {
