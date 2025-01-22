@@ -10,12 +10,6 @@ exe{driver}: {h c}{*} $libs testscript
 # @@ TMP: try to re-enable on next release.
 #
 if ($c.class == 'msvc')
-  c.coptions += /wd4267 /wd4996
-else
-{
-  if ($c.id.type == 'clang' && $c.version.major >= 15)
-    c.coptions += -Wno-deprecated-non-prototype
-
-  if ($c.id == 'clang' && $c.target.system == 'win32-msvc')
-    c.coptions += -Wno-deprecated-declarations
-}
+  c.coptions += /wd4996
+elif ($c.id == 'clang' && $c.target.system == 'win32-msvc')
+  c.coptions += -Wno-deprecated-declarations

@@ -1,7 +1,7 @@
 : 1
 name: libz
-version: 1.2.1200+5
-upstream-version: 1.2.12
+version: 1.3.100-a.0.z
+upstream-version: 1.3.1
 project: zlib
 summary: General-purpose lossless data compression C library
 license: Zlib ; Permissive free software license.
@@ -11,7 +11,7 @@ url: https://www.zlib.net/
 doc-url: https://www.zlib.net/manual.html
 src-url: https://git.build2.org/cgit/packaging/zlib/zlib/tree/libz/
 package-url: https://git.build2.org/cgit/packaging/zlib/
-email: zlib@gzip.org ; Send Windows DLL-related questions to Gilles Vollant at info@winimage.com.
+email: zlib@gzip.org
 package-email: packaging@build2.org ; Mailing list.
 build-warning-email: builds@build2.org
 builds: all

@@ -1,5 +1,7 @@
---- ../../upstream/zlib.h	2020-01-06 18:33:14.848145554 +0300
-+++ zlib.h	2020-01-20 21:24:04.526545608 +0300
+diff --git a/libz/libz/zlib.h b/libz/libz/zlib.h
+index 8d4b932..32dc34b 100644
+--- a/libz/libz/zlib.h
++++ b/libz/libz/zlib.h
 @@ -31,7 +31,7 @@
  #ifndef ZLIB_H
  #define ZLIB_H

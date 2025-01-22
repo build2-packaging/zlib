@@ -10,8 +10,7 @@ build2-based build system and packaged for the build2 package manager (bpkg).
 See the INSTALL file for the prerequisites and installation instructions.
 
 Send questions, bug reports, or any other feedback about the library itself to
-zlib@gzip.org or to Gilles Vollant at info@winimage.com (Windows DLL-related
-questions). Send build system and packaging-related feedback to the
+zlib@gzip.org. Send build system and packaging-related feedback to the
 packaging@build2.org mailing list (see https://lists.build2.org for posting
 guidelines, etc).
 
